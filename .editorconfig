@@ -1,0 +1,112 @@
+# EditorConfig for React Projects
+# https://editorconfig.org
+
+root = true
+
+[*]
+# Basic Settings
+indent_style = space
+indent_size = 2
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# Match multiple files
+[*.{js,jsx,ts,tsx,json,md,css,scss,sass,less,html,yml,yaml}]
+indent_size = 2
+
+# TypeScript and JavaScript specific
+[*.{js,jsx,ts,tsx}]
+# Quote style - using single quotes for JS/TS
+quote_type = single
+# Trailing commas - ES5 compatible
+trailing_comma = es5
+# Semicolons
+semicolons = true
+# Arrow function parentheses
+arrow_parens = avoid
+# Bracket spacing
+bracket_spacing = true
+
+# JSON files - stricter formatting
+[*.json]
+indent_size = 2
+quote_type = double
+trailing_comma = none
+
+# Markdown files
+[*.md]
+trim_trailing_whitespace = false
+indent_size = 2
+
+# CSS/SCSS/LESS files
+[*.{css,scss,sass,less}]
+indent_size = 2
+quote_type = double
+
+# YAML files
+[*.{yml,yaml}]
+indent_size = 2
+indent_style = space
+
+# HTML files
+[*.html]
+indent_size = 2
+
+# Config files - typically 2 spaces
+[*.{config,rc,ignore,eslintignore,prettierignore,gitignore}]
+indent_size = 2
+
+# Package files
+[package*.json]
+indent_size = 2
+
+# Lock files - don't modify formatting
+[*.lock]
+insert_final_newline = false
+trim_trailing_whitespace = false
+
+# Image and binary files - no processing
+[*.{png,jpg,jpeg,gif,webp,svg,ico,woff,woff2,ttf,eot}]
+insert_final_newline = false
+trim_trailing_whitespace = false
+
+# Test files - same as source
+[*.{test,spec}.{js,jsx,ts,tsx}]
+indent_size = 2
+
+# Storybook files
+[*.stories.{js,jsx,ts,tsx}]
+indent_size = 2
+
+# Vite/Build config
+[vite.config.{js,ts},webpack.config.{js,ts},rollup.config.{js,ts}]
+indent_size = 2
+
+# ESLint/Prettier config
+[.eslintrc.{js,json,yaml,yml},.prettierrc.{js,json,yaml,yml},prettier.config.{js,json,yaml,yml}]
+indent_size = 2
+
+# Git config
+[.gitconfig,.gitattributes,.gitmodules]
+indent_size = 2
+
+# Environment files - preserve exact formatting
+[.env*]
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Docker files
+[Dockerfile*,docker-compose*.yml,docker-compose*.yaml]
+indent_size = 2
+
+# Shell scripts
+[*.sh]
+indent_size = 2
+end_of_line = lf
+
+# Python files (if any)
+[*.py]
+indent_size = 4
+indent_style = space
