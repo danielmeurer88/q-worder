@@ -1,0 +1,33 @@
+
+
+.letters-box {
+
+  --yellow: rgb(251, 255, 2);
+  --grey: rgb(141, 141, 139);
+
+  border: 2px solid grey;
+  border-radius: 0.2ch;
+  font-size: 1rem;
+  padding: 1ch;
+
+  &.letters-box-yellow {
+    border-color: var(--yellow);
+
+    &:focus-visible {
+      border-color: oklch(from var(--yellow) calc(l - 0.33) c h);
+    }
+  }
+
+  &.letters-box-grey {
+    border-color: var(--grey);
+
+    &:focus-visible {
+      border-color: oklch(from var(--grey) calc(l - 0.33) c h);
+    }
+  }
+
+  &:focus {
+    border-color: transparent;
+  }
+
+}

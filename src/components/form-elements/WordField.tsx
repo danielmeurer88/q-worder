@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { InputEvent } from "react";
 import styles from './WordField.module.css';
+import { getCharFromInputData } from "../../shared/functions";
 
 interface WordFieldProps {
   onChange?: (word: string) => void;
@@ -19,27 +20,37 @@ export function WordField({ onChange, value = "     " }: WordFieldProps) {
     elements?.forEach((el, i) => {
       el.value = chars[i];
     });
-    console.log('updateInputFields', {ref, elements});
   };
 
   const handleInput = (index: number, e: InputEvent<HTMLInputElement>) => {
 
-    let char = (e.nativeEvent.data! || ' ').toLocaleUpperCase();
+    let newChar = getCharFromInputData(e.nativeEvent.data!);
 
-    if (!/^[A-Z]$/.test(char)) {
-      char = ' ';
-    }
+    // if data of input event is null then del or back space or cut was used
+    const delChar = e.nativeEvent.data === null;
+
+    const diff = chars[index] !== newChar;
 
     const inpEl = getInputElement(index);
 
-    const diff = inpEl.value !== char;
-
-    inpEl.value = char;
+    inpEl.value = newChar;
 
     if (diff) {
       let word = chars;
-      word[index] = char;
+      word[index] = newChar;
+      setChars(word);
       onChange?.(word.join(''));
+    }
+
+    // focus next or previous input
+    if (delChar && index > 0) {
+      const prevInp = getInputElement(index - 1);
+      prevInp?.focus();
+    }
+
+    if (!delChar && newChar !== ' ' && index < 4) {
+      const nextInp = getInputElement(index + 1);
+      nextInp?.focus();
     }
 
   };
@@ -64,6 +75,7 @@ export function WordField({ onChange, value = "     " }: WordFieldProps) {
           key={i}
           className={`${styles.letter} letter-${i + 1}`}
           onInput={(e) => handleInput(i, e)}
+          name={`letter-${i + 1}`}
         />
       ))}
     </div>
