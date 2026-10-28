@@ -1,12 +1,12 @@
 import { createContext } from "react";
 import type { Rule } from "./rules";
 
-export type WordsStateContext = {
+export type WordsStateContextType = {
   green: string;
   yellows: string;
   greys: string;
   rules: Rule[];
 };
 
-export const WordsStateContext = createContext<WordsStateContext | undefined>(void 0);
+export const WordsStateContext = createContext<WordsStateContextType | undefined>(void 0);
 

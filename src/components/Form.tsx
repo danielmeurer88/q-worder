@@ -5,6 +5,7 @@ import styles from './Form.module.css';
 import { getWords, type Words } from '../shared/functions';
 import { wordFulfillRule, type Rule } from '../shared/rules';
 import { WordsStateContext } from '../shared/words-state.context';
+import { WordsOptionsContext } from '../shared/options.context';
 
 
 let words: Words;
@@ -12,8 +13,11 @@ let words: Words;
 export function Form() {
 
   const [possibleSolutions, setPossibleSolutions] = useState('');
+  const [allowed, setAllowed] = useState('');
 
   const wordsState = useContext(WordsStateContext);
+
+  const options = useContext(WordsOptionsContext);
 
   let updateOnChange = true;
 
@@ -27,6 +31,7 @@ export function Form() {
     }
 
     setPossibleSolutions('');
+    setAllowed('')
   };
 
   const wordChangeHandle = (word: string) => {
@@ -65,6 +70,7 @@ export function Form() {
 
     let rules: Rule[] = [];
     let posWords: string[] = [];
+    let allowedWords: string[] = [];
 
     // green
     wordsState?.green.split('').map((char, i) => {
@@ -99,14 +105,34 @@ export function Form() {
 
     // get possible solutions
     words.solutions.forEach(word => {
-
       if (rules.every(rule => wordFulfillRule(word, rule))) {
         posWords.push(word);
       }
-
     });
 
-    setPossibleSolutions(posWords.join(', '));
+    if (options.showWords) {
+      setPossibleSolutions(posWords.join(', '));
+    } else {
+      setPossibleSolutions(`Solutions: ${posWords.length}`);
+    }
+
+    if (options.useNonSolutions) {
+
+      // consider allowed words as well
+      words.allowed.forEach(word => {
+        if (rules.every(rule => wordFulfillRule(word, rule))) {
+          allowedWords.push(word);
+        }
+      });
+
+      if (options.showWords) {
+        setAllowed(allowedWords.join(', '));
+      } else {
+        setAllowed(`Allowed Words: ${allowedWords.length}`);
+      }
+
+    }
+
 
   }
 
@@ -126,6 +152,7 @@ export function Form() {
         <div className={`${styles['words-box']} ${styles['words-box-solutions']}`}>
           { possibleSolutions }
         </div>
+        { allowed ? <div>{allowed}</div> : <></> }
       </div>
     </div>
   );
