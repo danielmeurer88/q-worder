@@ -24,7 +24,7 @@ export function WordField({ onChange, value = "     " }: WordFieldProps) {
 
   const handleInput = (index: number, e: InputEvent<HTMLInputElement>) => {
 
-    let newChar = getCharFromInputData(e.nativeEvent.data!);
+    let newChar = getCharFromInputData(e);
 
     // if data of input event is null then del or back space or cut was used
     const delChar = e.nativeEvent.data === null;

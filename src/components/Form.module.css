@@ -18,3 +18,14 @@
   gap: 1ch;
 
 }
+
+.words-box {
+
+  border: 2px solid #eee;
+  border-radius: 5px;
+  corner-shape: squircle;
+  padding: 0.5ch;
+
+  /*&.words-box-solutions {}*/
+
+}

@@ -13,7 +13,9 @@ export function TextAreaBox({onChange, type}: TextAreaBoxObject) {
 
   const inputHandle = (e: InputEvent<HTMLTextAreaElement>) => {
 
-    let newChar = getCharFromInputData(e.nativeEvent.data!);
+    console.log('TextAreaBox', e);
+
+    let newChar = getCharFromInputData(e);
 
     if (ref.current) {
 
