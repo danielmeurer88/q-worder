@@ -76,6 +76,7 @@ export function WordField({ onChange, value = "     " }: WordFieldProps) {
           className={`${styles.letter} letter-${i + 1}`}
           onInput={(e) => handleInput(i, e)}
           name={`letter-${i + 1}`}
+          placeholder={`${i + 1}`}
         />
       ))}
     </div>

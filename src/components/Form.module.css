@@ -8,24 +8,81 @@
 
 .form {
   max-width: 420px;
-  background: #ffffff;
+  background: linear-gradient(185deg, #f8f8f8 0%, #d7d7d7 33%,#f8f8f8  100%);;
   border-radius: 12px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+
+  border: 0px solid #464646;
+
   padding: 40px 32px;
 
   display: grid;
   grid-template-columns: 1fr;
   gap: 1ch;
 
+  anchor-name: --form-div;
+
+}
+
+.attachement {
+
+  interpolate-size: allow-keywords;
+
+  position-anchor: --form-div;
+  position: fixed;
+
+  bottom: anchor(top);
+  left: calc(anchor(left) + 10px);
+  right: calc(anchor(right) + 10px);
+
+
+  .toggle {
+
+  }
+
+  .options {
+
+    width: 100%;
+    background-color: rgb(209, 209, 209);
+
+
+    height: auto;
+    overflow: hidden;
+    transition: height 300ms ease;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1ch;
+
+    &.closed {
+      height: 0;
+    }
+
+    & > div {
+      margin: 1ch;
+      display: flex;
+      gap: 1ch;
+      align-items: flex-end;
+    }
+  }
+
 }
 
 .words-box {
 
-  border: 2px solid #eee;
+  border: 2px solid #545353;
+  background-color: white;
   border-radius: 5px;
   corner-shape: squircle;
   padding: 0.5ch;
 
   /*&.words-box-solutions {}*/
 
+  /*&.words-box-allowed*/
+
+}
+
+button {
+  padding: 2ch 4ch;
+  border-radius: 5px;
+  corner-shape: squircle;
 }

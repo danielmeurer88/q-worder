@@ -6,7 +6,7 @@ function App() {
 
   return (
     <WordsOptionsContext.Provider value={{
-      useNonSolutions: true,
+      useNonSolutions: false,
       showWords: false
     }}>
       <WordsStateContext.Provider value={{

@@ -3,9 +3,9 @@
 .letters-box {
 
   --yellow: rgb(251, 255, 2);
-  --grey: rgb(141, 141, 139);
+  --grey: rgb(87, 87, 87);
 
-  border: 2px solid grey;
+  border: 4px solid grey;
   border-radius: 0.2ch;
   font-size: 1rem;
   padding: 1ch;

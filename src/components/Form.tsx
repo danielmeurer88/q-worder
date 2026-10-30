@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, type PointerEvent } from 'react';
+import { useContext, useEffect, useState, type InputEvent, type PointerEvent } from 'react';
 import { TextAreaBox } from './form-elements/TextAreaBox';
 import { WordField } from './form-elements/WordField';
 import styles from './Form.module.css';
@@ -14,12 +14,37 @@ export function Form() {
 
   const [possibleSolutions, setPossibleSolutions] = useState('');
   const [allowed, setAllowed] = useState('');
+  const [toggleOpen, setToggleOpen] = useState(true);
 
   const wordsState = useContext(WordsStateContext);
 
   const options = useContext(WordsOptionsContext);
 
   let updateOnChange = true;
+
+  const toggleOptions = (e: PointerEvent<HTMLButtonElement>) => {
+    setToggleOpen(!toggleOpen);
+  };
+
+  const optionsInputHandle = (e: InputEvent<HTMLInputElement>) => {
+
+    const target = e.nativeEvent.target as HTMLInputElement;
+    const checked = target.checked;
+
+    const showWords = Array.from(target.classList.entries()).some(([, str]) => str.includes('show'));
+    const allowed = Array.from(target.classList.entries()).some(([, str]) => str.includes('allowed'));
+
+    if (showWords) {
+      options.showWords = checked;
+    }
+
+    if (allowed) {
+      options.useNonSolutions = checked;
+    }
+
+    updateResult();
+
+  };
 
   const resetHandle = (e: PointerEvent<HTMLButtonElement>) => {
     console.log('reset', e);
@@ -31,7 +56,7 @@ export function Form() {
     }
 
     setPossibleSolutions('');
-    setAllowed('')
+    setAllowed('');
   };
 
   const wordChangeHandle = (word: string) => {
@@ -103,6 +128,12 @@ export function Form() {
       }
     });
 
+    if (rules.length === 0) {
+      setPossibleSolutions('');
+      setAllowed('');
+      return;
+    }
+
     // get possible solutions
     words.solutions.forEach(word => {
       if (rules.every(rule => wordFulfillRule(word, rule))) {
@@ -142,6 +173,23 @@ export function Form() {
 
   return (
     <div className={styles.container}>
+
+      <div className={styles.attachement}>
+        <div className="toggle">
+          <button onClick={toggleOptions}>Toggle</button>
+        </div>
+        <div className={styles.options + ' ' + (toggleOpen ? styles.open : styles.closed)}>
+          <div>
+            <span>Use non solution words as well</span>
+            <input className='use-allowed' type="checkbox" onInput={optionsInputHandle}></input>
+          </div>
+          <div>
+            <span>Show words instead of amount</span>
+            <input className='show-words' type="checkbox" onInput={optionsInputHandle}></input>
+          </div>
+        </div>
+      </div>
+
       <div className={styles.form}>
         <div>
           <button onClick={resetHandle}>RESET</button>
@@ -152,7 +200,7 @@ export function Form() {
         <div className={`${styles['words-box']} ${styles['words-box-solutions']}`}>
           { possibleSolutions }
         </div>
-        { allowed ? <div>{allowed}</div> : <></> }
+        { allowed ? <div className={`${styles['words-box']} ${styles['words-box-allowed']}`}>{allowed}</div> : <></> }
       </div>
     </div>
   );
